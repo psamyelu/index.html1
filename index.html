@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAM / CUTS — Video Editor Portfolio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#050505;color:#fff;font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;width:100%;height:78px;padding:0 6%;
+  display:flex;align-items:center;justify-content:space-between;z-index:100;
+  background:linear-gradient(#050505ed,transparent)
+}
+.logo{font:800 23px "Space Grotesk";letter-spacing:-1px}
+.logo span{opacity:.35}
+nav ul{display:flex;gap:30px;list-style:none}
+nav a{color:#fff;text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.7}
+nav a:hover{opacity:1}
+
+/* HERO */
+.hero{
+  min-height:100vh;padding:120px 7% 60px;position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1fr .85fr;align-items:center;gap:40px;
+  background:
+    radial-gradient(circle at 75% 45%,rgba(255,255,255,.10),transparent 27%),
+    radial-gradient(circle at 20% 80%,rgba(255,255,255,.04),transparent 30%),
+    #050505;
+}
+.hero:after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.08;
+  background-image:linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom,#000,transparent);
+}
+.hero-content,.portrait-wrap{position:relative;z-index:2}
+.kicker{color:#777;font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:25px}
+h1{font:800 clamp(70px,11vw,155px)/.80 "Space Grotesk";letter-spacing:-9px}
+.outline{color:transparent;-webkit-text-stroke:1px #aaa}
+.hero-description{max-width:550px;color:#999;line-height:1.8;margin:38px 0 28px;font-size:14px}
+.btn{
+  display:inline-block;padding:15px 23px;border:1px solid #333;color:#fff;
+  text-decoration:none;text-transform:uppercase;letter-spacing:2px;font-size:10px;
+  transition:.3s;margin-right:8px
+}
+.btn.primary{background:#fff;color:#000;border-color:#fff}
+.btn:hover{transform:translateY(-3px);border-color:#fff}
+
+/* IDENTITY PHOTO */
+.portrait-wrap{
+  width:min(480px,100%);height:650px;justify-self:center;overflow:hidden;
+  background:#080808;box-shadow:0 0 80px rgba(255,255,255,.04);
+}
+.portrait{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:contrast(1.08) brightness(.88);
+}
+.portrait-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 45%,#050505 100%);
+}
+.identity{
+  position:absolute;left:28px;bottom:30px;z-index:3
+}
+.identity small{display:block;color:#aaa;text-transform:uppercase;letter-spacing:3px;font-size:9px;margin-bottom:5px}
+.identity strong{font:600 28px "Space Grotesk"}
+
+/* SECTIONS */
+section{padding:115px 7%}
+@media(max-width:800px){#profile > div:last-child{grid-template-columns:1fr!important}}
+.dark{background:#080808}
+.section-label{
+  border-top:1px solid #222;padding-top:14px;margin-bottom:50px;
+  display:flex;justify-content:space-between;color:#666;
+  text-transform:uppercase;letter-spacing:2px;font-size:10px
+}
+.section-title{
+  font:700 clamp(48px,8vw,105px)/.88 "Space Grotesk";
+  letter-spacing:-5px;margin-bottom:55px
+}
+
+/* SHOWREEL */
+.showreel{
+  height:min(68vh,700px);min-height:400px;background:#111;
+  position:relative;overflow:hidden
+}
+.showreel video{width:100%;height:100%;object-fit:cover}
+.showreel-note{
+  position:absolute;left:25px;bottom:22px;padding:9px 12px;
+  background:#000b;color:#aaa;font-size:9px;letter-spacing:2px;text-transform:uppercase
+}
+
+/* WORK */
+.work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+.project{background:#0d0d0d;overflow:hidden;cursor:pointer}
+.project:nth-child(1),.project:nth-child(4){grid-column:span 7}
+.project:nth-child(2),.project:nth-child(3),.project:nth-child(5){grid-column:span 5}
+.project-media{aspect-ratio:16/10;background:#151515;overflow:hidden}
+.project-media video{width:100%;height:100%;object-fit:cover;transition:.7s}
+.project:hover video{transform:scale(1.05)}
+.project-info{padding:17px}
+.project-info h3{font:600 22px "Space Grotesk"}
+.project-info p{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:2px;margin-top:6px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.about-big{font:500 clamp(28px,4vw,55px)/1.15 "Space Grotesk";letter-spacing:-2px}
+.muted{color:#555}
+.about-copy{color:#999;line-height:1.9;font-size:14px}
+.profile-photo-card{position:relative;min-height:520px;background:#080808;border:1px solid #222;overflow:hidden}
+.profile-photo-card img{width:100%;height:100%;min-height:520px;object-fit:cover;object-position:center;display:block;filter:contrast(1.06) brightness(.9)}
+.profile-photo-card:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.88),transparent 55%);pointer-events:none}
+.profile-photo-caption{position:absolute;left:28px;bottom:24px;z-index:2}
+.profile-photo-caption small{display:block;color:#aaa;text-transform:uppercase;letter-spacing:3px;font-size:9px;margin-bottom:6px}
+.profile-photo-caption strong{font:600 25px "Space Grotesk"}
+
+/* SKILLS */
+.skills-list{border-top:1px solid #222}
+.skill{
+  display:grid;grid-template-columns:70px 1fr auto;align-items:center;
+  padding:26px 0;border-bottom:1px solid #222
+}
+.skill-name{font:500 clamp(25px,4vw,52px) "Space Grotesk";letter-spacing:-2px}
+.skill-level{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#666}
+
+/* EDITOR STUDIO */
+.upload-box{
+  border:1px dashed #444;padding:55px 25px;text-align:center;background:#070707
+}
+.upload-box h3{font:600 34px "Space Grotesk";margin-bottom:10px}
+.upload-box p{color:#666;margin-bottom:23px;font-size:13px}
+.upload-button{
+  display:inline-block;background:#fff;color:#000;padding:14px 23px;
+  cursor:pointer;font-size:10px;letter-spacing:2px;text-transform:uppercase
+}
+#videoUpload{display:none}
+#previewVideo{display:none;width:100%;max-height:600px;margin-top:30px;background:#000}
+#fileName{color:#aaa;margin-top:15px;font-size:11px}
+
+/* CONTACT */
+.contact{
+  background:#fff;color:#000;min-height:72vh;
+  display:flex;flex-direction:column;justify-content:center
+}
+.contact .section-label{border-color:#ddd;color:#777}
+.contact .section-title{font-size:clamp(60px,12vw,170px)}
+.email{
+  color:#000;text-decoration:none;font:600 clamp(24px,4vw,55px) "Space Grotesk";
+  border-bottom:2px solid #000;width:max-content
+}
+
+/* FOOTER */
+footer{
+  padding:30px 7%;display:flex;justify-content:space-between;
+  color:#555;text-transform:uppercase;letter-spacing:2px;font-size:9px
+}
+
+/* MOBILE */
+@media(max-width:800px){
+  nav ul{display:none}
+  .hero{grid-template-columns:1fr;padding-top:125px}
+  h1{font-size:19vw;letter-spacing:-6px}
+  .portrait-wrap{height:520px;margin-top:35px}
+  section{padding:85px 6%}
+  .work-grid{display:block}
+  .project{margin-bottom:30px}
+  .about-grid{grid-template-columns:1fr;gap:35px}
+  .skill{grid-template-columns:45px 1fr}
+  .skill-level{display:none}
+  footer{display:block;line-height:2.5}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo">SAM<span>/CUTS</span></div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#reel">Showreel</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#studio">Upload</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO WITH YOUR PHOTO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="kicker">Independent Video Editor / Visual Creator</div>
+
+    <h1>
+      SAM<br>
+      <span class="outline">CUTS</span>
+    </h1>
+
+    <p class="hero-description">
+      I turn raw footage into cinematic stories — video editing,
+      VFX, motion graphics, AI visuals, short films, advertisements
+      and social content.
+    </p>
+
+    <a href="#work" class="btn primary">View My Work</a>
+    <a href="#contact" class="btn">Hire Me</a>
+  </div>
+
+  <div class="portrait-wrap">
+    <!-- YOUR UPLOADED IMAGE -->
+    <img src="assets/sam-hero.png" class="portrait" alt="Samyelu — Video Editor">
+
+    <div class="portrait-overlay"></div>
+
+    <div class="identity">
+      <small>Editor / Visual Creator</small>
+      <strong>SAMYELU</strong>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWREEL -->
+<section class="dark" id="reel">
+  <div class="section-label">
+    <span>01 — Showreel</span>
+    <span>Selected Work</span>
+  </div>
+
+  <h2 class="section-title">
+    EDITING THAT<br>
+    FEELS LIKE CINEMA.
+  </h2>
+
+  <div class="showreel">
+    <!-- Put your main video at videos/showreel.mp4 -->
+    <video controls muted loop playsinline>
+      <source src="videos/showreel.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+
+    <div class="showreel-note">
+      Replace showreel.mp4 with your own video
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="work">
+  <div class="section-label">
+    <span>02 — Portfolio</span>
+    <span>2026</span>
+  </div>
+
+  <h2 class="section-title">
+    THE<br>
+    WORK.
+  </h2>
+
+  <div class="work-grid">
+
+    <article class="project">
+      <div class="project-media">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0">
+          <source src="videos/short-film.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>The Dream</h3>
+        <p>Short Film / Cinematic</p>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0">
+          <source src="videos/vfx.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>Soul Rising</h3>
+        <p>VFX / CGI</p>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0">
+          <source src="videos/mass-hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>Mass Hero</h3>
+        <p>Action / Reel</p>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0">
+          <source src="videos/advertisement.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>Brand Motion</h3>
+        <p>Advertisement</p>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0">
+          <source src="videos/ai-video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>AI Worlds</h3>
+        <p>AI / Cinematic</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile">
+  <div class="section-label">
+    <span>03 — Profile</span>
+    <span>Samyelu</span>
+  </div>
+
+  <div class="about-grid" style="grid-template-columns:.78fr 1.22fr;align-items:stretch">
+    <div class="profile-photo-card">
+      <img src="assets/sam-profile.png" alt="Samyelu profile portrait">
+      <div class="profile-photo-caption">
+        <small>Creative Profile</small>
+        <strong>SAM / CUTS</strong>
+      </div>
+    </div>
+
+    <div>
+      <div class="about-big">
+        <span class="muted">SAMYELU</span><br>
+        Video Editor,<br>
+        Visual Creator &amp;<br>
+        Creative Technologist.
+      </div>
+
+      <div class="about-copy" style="margin-top:28px">
+      <p><strong>Full Name:</strong> Palaparthi Samyelu</p>
+      <p><strong>Professional Name:</strong> Samyelu / SAM CUTS</p>
+      <p><strong>Location:</strong> Andhra Pradesh, India</p>
+      <p><strong>Education:</strong> B.Tech in Electrical &amp; Electronics Engineering</p>
+      <p><strong>Creative Focus:</strong> Video Editing, Cinematic Storytelling, VFX, Motion Graphics, AI Video and Short Films</p>
+      <p><strong>Technical Interests:</strong> Python, Data Analysis, AI tools and creative digital production</p>
+      <br>
+      <p>I combine technical thinking with visual storytelling to create cinematic videos, advertisements, reels, AI-assisted productions and short-film content.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:55px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+    <div style="border:1px solid #222;padding:25px;background:#0d0d0d"><small style="color:#666;letter-spacing:2px;text-transform:uppercase">Education</small><br><strong style="font:500 25px 'Space Grotesk'">B.Tech EEE</strong></div>
+    <div style="border:1px solid #222;padding:25px;background:#0d0d0d"><small style="color:#666;letter-spacing:2px;text-transform:uppercase">Creative</small><br><strong style="font:500 25px 'Space Grotesk'">Video &amp; VFX</strong></div>
+    <div style="border:1px solid #222;padding:25px;background:#0d0d0d"><small style="color:#666;letter-spacing:2px;text-transform:uppercase">AI</small><br><strong style="font:500 25px 'Space Grotesk'">AI Visuals</strong></div>
+    <div style="border:1px solid #222;padding:25px;background:#0d0d0d"><small style="color:#666;letter-spacing:2px;text-transform:uppercase">Technical</small><br><strong style="font:500 25px 'Space Grotesk'">Python</strong></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="dark" id="about">
+  <div class="section-label">
+    <span>04 — About</span>
+    <span>The Editor</span>
+  </div>
+
+  <div class="about-grid">
+
+    <div class="about-big">
+      I don't just <span class="muted">cut videos.</span><br>
+      I build moments people
+      <span class="muted">remember.</span>
+    </div>
+
+    <div class="about-copy">
+      I'm <strong>Samyelu</strong>, an independent video editor
+      and visual creator focused on cinematic storytelling,
+      VFX, motion graphics, AI-generated visuals, short films
+      and social content.
+
+      <br><br>
+
+      My goal is simple: take ordinary footage and turn it into
+      something cinematic, emotional and memorable.
+
+      <br><br>
+
+      Available for freelance editing, YouTube projects,
+      advertisements, reels, short films and creative collaborations.
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">
+    <span>04 — Capabilities</span>
+    <span>What I Do</span>
+  </div>
+
+  <h2 class="section-title">
+    EDIT.<br>
+    CREATE.<br>
+    IMPACT.
+  </h2>
+
+  <div class="skills-list">
+
+    <div class="skill">
+      <span>01</span>
+      <span class="skill-name">Video Editing</span>
+      <span class="skill-level">Advanced</span>
+    </div>
+
+    <div class="skill">
+      <span>02</span>
+      <span class="skill-name">Color Grading</span>
+      <span class="skill-level">Advanced</span>
+    </div>
+
+    <div class="skill">
+      <span>03</span>
+      <span class="skill-name">VFX / CGI</span>
+      <span class="skill-level">Advanced</span>
+    </div>
+
+    <div class="skill">
+      <span>04</span>
+      <span class="skill-name">Motion Graphics</span>
+      <span class="skill-level">Advanced</span>
+    </div>
+
+    <div class="skill">
+      <span>05</span>
+      <span class="skill-name">AI Video</span>
+      <span class="skill-level">Creative</span>
+    </div>
+
+    <div class="skill">
+      <span>06</span>
+      <span class="skill-name">Sound Design</span>
+      <span class="skill-level">Advanced</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- UPLOAD / EDITOR STUDIO -->
+<section class="dark" id="studio">
+  <div class="section-label">
+    <span>05 — Editor Studio</span>
+    <span>Local Video Preview</span>
+  </div>
+
+  <h2 class="section-title">
+    ADD YOUR<br>
+    NEW WORK.
+  </h2>
+
+  <div class="upload-box">
+    <h3>Upload Studio</h3>
+
+    <p>
+      Select a video from your computer to preview it.
+    </p>
+
+    <label class="upload-button" for="videoUpload">
+      Choose Video
+    </label>
+
+    <input id="videoUpload" type="file" accept="video/*">
+
+    <div id="fileName"></div>
+
+    <video id="previewVideo" controls></video>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">
+    <span>07 — Contact</span>
+    <span>Let's Create</span>
+  </div>
+
+  <h2 class="section-title">
+    HAVE A<br>
+    STORY?
+  </h2>
+
+  <!-- CHANGE THIS EMAIL -->
+  <a class="email" href="mailto:your@email.com">
+    LET'S TALK →
+  </a>
+</section>
+
+<footer>
+  <span>© 2026 SAM / CUTS</span>
+  <span>VIDEO EDITOR · VISUAL CREATOR</span>
+</footer>
+
+<script>
+/* Local video preview */
+const upload = document.getElementById("videoUpload");
+const preview = document.getElementById("previewVideo");
+const fileName = document.getElementById("fileName");
+
+upload.addEventListener("change", function () {
+  const file = this.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("video/")) {
+    alert("Please choose a video file.");
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+  fileName.textContent = "Selected: " + file.name;
+});
+</script>
+
+</body>
+</html>
